@@ -3,6 +3,7 @@ package types
 type Config struct {
 	Webserver Webserver `json:"webserver"`
 	App       App       `json:"app"`
+	Routes    []Route   `json:"routes"`
 }
 
 type WebserverPaths struct {
@@ -34,4 +35,9 @@ type FiberSettings struct {
 	Prefork       bool `json:"prefork"`
 	CaseSensitive bool `json:"case_sensitive"`
 	StrictRouting bool `json:"strict_routing"`
+}
+
+type Route struct {
+	Path    string `json:"path"`
+	Handler string `json:"handler"`
 }
