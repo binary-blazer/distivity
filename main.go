@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
-	config := config.GetConfig(routes.IndexHandler)
-	server.Run(config, routes.IndexHandler)
+	handlers := map[string]fiber.Handler{
+		"/": routes.IndexHandler,
+	}
+	config := config.GetConfig(handlers)
+	server.Run(config, handlers)
 }
