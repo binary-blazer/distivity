@@ -4,6 +4,8 @@ import (
 	"distivity/config"
 	"distivity/routes"
 	"distivity/server"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
