@@ -1,11 +1,11 @@
 package config
 
 import (
-	"distivity/routes"
 	"distivity/types"
+	"github.com/gofiber/fiber/v2"
 )
 
-func GetConfig() types.Config {
+func GetConfig(handlers map[string]fiber.Handler) types.Config {
 	return types.Config{
 		Webserver: types.Webserver{
 			Port: 3000,
@@ -39,9 +39,9 @@ func GetConfig() types.Config {
 		},
 		Routes: []types.Route{
 			{
-				Path:    "/",
-				Handler: routes.IndexHandler,
+				Path: "/",
 			},
 		},
+		Handlers: handlers,
 	}
 }

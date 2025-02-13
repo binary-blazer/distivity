@@ -4,13 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	"distivity/config"
+	"distivity/types"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func IndexHandler(c *fiber.Ctx) error {
-	config := config.GetConfig()
+func IndexHandler(c *fiber.Ctx, config types.Config) error {
 	start := time.Now()
 
 	response := map[string]interface{}{
