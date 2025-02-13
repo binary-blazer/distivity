@@ -37,5 +37,11 @@ func Run(config types.Config) {
 		return c.JSON(response)
 	})
 
+	for _, route := range config.Routes {
+		app.Get(route.Path, func(c *fiber.Ctx) error {
+			return c.SendString(route.Handler)
+		})
+	}
+
 	app.Listen(":" + fmt.Sprint(config.Webserver.Port))
 }

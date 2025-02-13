@@ -2,6 +2,7 @@ package config
 
 import (
 	"distivity/types"
+	"github.com/gofiber/fiber/v2"
 )
 
 func GetConfig() types.Config {
@@ -33,6 +34,14 @@ func GetConfig() types.Config {
 					Name:     "Samuel Domke",
 					Codename: "SamTheDev",
 					Email:    "",
+				},
+			},
+		},
+		Routes: []types.Route{
+			{
+				Path: "/example",
+				Handler: func(c *fiber.Ctx) error {
+					return c.SendString("Example route")
 				},
 			},
 		},
