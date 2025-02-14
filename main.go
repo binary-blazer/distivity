@@ -10,7 +10,9 @@ import (
 
 func main() {
 	handlers := map[string]fiber.Handler{
-		"/": routes.IndexHandler,
+		"/": func(c *fiber.Ctx) error {
+			return routes.IndexHandler(c, config)
+		},
 	}
 	config := config.GetConfig(handlers)
 	server.Run(config, handlers)

@@ -20,7 +20,9 @@ func Run(config types.Config, handlers map[string]fiber.Handler) {
 	app.Static(config.Webserver.Paths.Root, config.Webserver.Paths.Static)
 
 	for path, handler := range handlers {
-		app.Get(path, handler)
+		app.Get(path, func(c *fiber.Ctx) error {
+			return handler(c, config)
+		})
 	}
 
 	app.Listen(":" + fmt.Sprint(config.Webserver.Port))
