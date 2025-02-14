@@ -9,9 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var config types.Config
-
-func IndexHandler(c *fiber.Ctx) error {
+func IndexHandler(c *fiber.Ctx, config types.Config) error {
 	start := time.Now()
 
 	response := map[string]interface{}{
