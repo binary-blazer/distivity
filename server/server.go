@@ -21,7 +21,7 @@ func Run(config types.Config, handlers map[string]fiber.Handler) {
 
 	for path, handler := range handlers {
 		app.Get(path, func(c *fiber.Ctx) error {
-			return handler(c, config)
+			return handler(c)
 		})
 	}
 
