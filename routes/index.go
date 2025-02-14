@@ -12,10 +12,10 @@ func IndexHandler(c *fiber.Ctx) error {
 
 	response := map[string]interface{}{
 		"app_name": "Distivity",
-		"info":     "A modern RESTful API to get presence details of a discord account by ID or username",
+		"info":     "A modern RESTful API to get presence details of a discord account by ID",
 		"code":     200,
 		"success":  true,
-		"authors":  []map[string]string{
+		"authors": []map[string]string{
 			{
 				"name":     "Jonas F. Franke",
 				"codename": "BinaryBlazer",

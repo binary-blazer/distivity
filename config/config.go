@@ -2,6 +2,7 @@ package config
 
 import (
 	"distivity/types"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -21,7 +22,7 @@ func GetConfig(handlers map[string]fiber.Handler) types.Config {
 		},
 		App: types.App{
 			Name:        "Distivity",
-			Description: "A modern RESTful API to get presence details of a discord account by ID or username",
+			Description: "A modern RESTful API to get presence details of a discord account by ID",
 			Version:     "1.0.0",
 			Environment: "development",
 			Authors: []types.Author{
