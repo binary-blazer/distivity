@@ -3,6 +3,7 @@ package routes
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"distivity/config/static"
@@ -14,6 +15,7 @@ func fetchUserActivity(userID string, discordToken string) (map[string]interface
 	url := fmt.Sprintf("https://discord.com/api/v9/users/%s/activities", userID)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
+		log.Printf("Error creating request: %v", err)
 		return nil, err
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bot %s", discordToken))
@@ -21,16 +23,19 @@ func fetchUserActivity(userID string, discordToken string) (map[string]interface
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		log.Printf("Error making request: %v", err)
 		return nil, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
+		log.Printf("Error response status: %v", resp.StatusCode)
 		return nil, fmt.Errorf("failed to fetch user activity")
 	}
 
 	var activities map[string]interface{}
 	if err := json.NewDecoder(resp.Body).Decode(&activities); err != nil {
+		log.Printf("Error decoding response: %v", err)
 		return nil, err
 	}
 
