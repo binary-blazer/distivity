@@ -2,11 +2,21 @@ package config
 
 import (
 	"distivity/types"
+	"fmt"
+	"os"
 
-	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 )
 
-func GetConfig(handlers map[string]fiber.Handler) types.Config {
+func init() {
+	if err := godotenv.Load(); err != nil {
+		fmt.Println("Error loading .env file")
+	}
+}
+
+func GetVariables() types.Config {
+	discordToken := os.Getenv("DISCORD_BOT_TOKEN")
+
 	return types.Config{
 		Webserver: types.Webserver{
 			Port: 3000,
@@ -46,6 +56,8 @@ func GetConfig(handlers map[string]fiber.Handler) types.Config {
 				Path: "/user/:id",
 			},
 		},
-		Handlers: handlers,
+		Credentials: types.Credentials{
+			DiscordToken: discordToken,
+		},
 	}
 }

@@ -3,10 +3,11 @@ package types
 import "github.com/gofiber/fiber/v2"
 
 type Config struct {
-	Webserver Webserver                `json:"webserver"`
-	App       App                      `json:"app"`
-	Routes    []Route                  `json:"routes"`
-	Handlers  map[string]fiber.Handler `json:"handlers"`
+	Webserver   Webserver                `json:"webserver"`
+	App         App                      `json:"app"`
+	Routes      []Route                  `json:"routes"`
+	Handlers    map[string]fiber.Handler `json:"handlers"`
+	Credentials Credentials              `json:"credentials"`
 }
 
 type WebserverPaths struct {
@@ -42,4 +43,8 @@ type FiberSettings struct {
 
 type Route struct {
 	Path string `json:"path"`
+}
+
+type Credentials struct {
+	DiscordToken string `json:"discord_token"`
 }

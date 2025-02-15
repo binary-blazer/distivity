@@ -4,12 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
+
+	"distivity/config/static"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func UserHandler(c *fiber.Ctx) error {
+	config := static.GetConfig()
+
 	userID := c.Params("id")
 	if userID == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -17,8 +20,7 @@ func UserHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	discordToken := os.Getenv("DISCORD_BOT_TOKEN")
-	if discordToken == "" {
+	if config.Credentials.DiscordToken == "" {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Discord bot token is not set",
 		})
@@ -31,7 +33,7 @@ func UserHandler(c *fiber.Ctx) error {
 			"error": "Failed to create request",
 		})
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bot %s", discordToken))
+	req.Header.Set("Authorization", fmt.Sprintf("Bot %s", config.Credentials.DiscordToken))
 
 	client := &http.Client{}
 	resp, err := client.Do(req)

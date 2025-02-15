@@ -1,7 +1,7 @@
 package main
 
 import (
-	"distivity/config"
+	"distivity/config/module"
 	"distivity/routes"
 	"distivity/server"
 
@@ -10,9 +10,9 @@ import (
 
 func main() {
 	handlers := map[string]fiber.Handler{
-		"/": routes.IndexHandler,
-		"/user/:id": routes.UserHandler, // Peefc
+		"/":         routes.IndexHandler,
+		"/user/:id": routes.UserHandler,
 	}
-	config := config.GetConfig(handlers)
+	config := module.GetConfig(handlers)
 	server.Run(config, handlers)
 }

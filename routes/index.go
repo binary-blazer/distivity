@@ -4,29 +4,21 @@ import (
 	"fmt"
 	"time"
 
+	"distivity/config/static"
+
 	"github.com/gofiber/fiber/v2"
 )
 
 func IndexHandler(c *fiber.Ctx) error {
+	config := static.GetConfig()
 	start := time.Now()
 
 	response := map[string]interface{}{
-		"app_name": "Distivity",
-		"info":     "A modern RESTful API to get presence details of a discord account by ID",
+		"app_name": config.App.Name,
+		"info":     config.App.Description,
 		"code":     200,
 		"success":  true,
-		"authors": []map[string]string{
-			{
-				"name":     "Jonas F. Franke",
-				"codename": "BinaryBlazer",
-				"email":    "me@binaryblazer.me",
-			},
-			{
-				"name":     "Samuel Domke",
-				"codename": "SamTheDev",
-				"email":    "",
-			},
-		},
+		"authors":  config.App.Authors,
 	}
 
 	duration := time.Since(start).Milliseconds()
