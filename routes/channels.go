@@ -1,9 +1,10 @@
 package routes
 
 import (
+	"distivity/client"
+
 	"github.com/bwmarrin/discordgo"
 	"github.com/gofiber/fiber/v2"
-	"distivity/client"
 )
 
 func ChannelsHandler(c *fiber.Ctx) error {
@@ -14,7 +15,7 @@ func ChannelsHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	guildID := c.Query("guild_id")
+	guildID := c.Params("id")
 	if guildID == "" {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Guild ID is required",

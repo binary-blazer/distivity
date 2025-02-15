@@ -72,13 +72,10 @@ func GetVariables() types.Config {
 				Path: "/status",
 			},
 			{
-				Path: "/guilds",
-			},
-			{
 				Path: "/guild/:id",
 			},
 			{
-				Path: "/channels",
+				Path: "/channels/:id",
 			},
 			{
 				Path: "/channel/:id",
