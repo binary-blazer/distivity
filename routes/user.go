@@ -105,5 +105,8 @@ func UserHandler(c *fiber.Ctx) error {
 		"success": true,
 	}
 
+	// Log the user data
+	log.Printf("User data: %v", response)
+
 	return c.JSON(response)
 }
