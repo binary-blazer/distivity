@@ -42,6 +42,9 @@ func GetConfig(handlers map[string]fiber.Handler) types.Config {
 			{
 				Path: "/",
 			},
+			{
+				Path: "/user/:id",
+			},
 		},
 		Handlers: handlers,
 	}
