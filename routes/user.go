@@ -15,9 +15,9 @@ import (
 
 func fetchUserActivity(config types.Config, userID string) (map[string]interface{}, error) {
 	session := client.GetDiscordSession()
-	if session.State == nil {
-		log.Printf("Error: Discord session state cache not found")
-		return nil, fmt.Errorf("discord session state cache not found")
+	if session == nil || session.State == nil {
+		log.Printf("Error: Discord session or state cache not found")
+		return nil, fmt.Errorf("discord session or state cache not found")
 	}
 
 	activity, err := session.State.Presence(config.Discord.GuildID, userID)
@@ -107,7 +107,20 @@ func UserHandler(c *fiber.Ctx) error {
 	if err != nil {
 		userInfo["activity_info"] = "Activity excluded because the user is not in the required Discord server"
 	} else {
-		userInfo["activities"] = activities
+		userInfo["activities"] = activities["activities"]
+	}
+
+	clientStatus, ok := activities["client_status"].(map[string]interface{})
+	if !ok {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Failed to parse client status",
+		})
+	}
+
+	userInfo["client_status"] = map[string]bool{
+		"desktop": clientStatus["desktop"] != "",
+		"mobile":  clientStatus["mobile"] != "",
+		"web":     clientStatus["web"] != "",
 	}
 
 	response := map[string]interface{}{
