@@ -17,6 +17,11 @@ func main() {
 		"/user/:id":   routes.UserHandler,
 		"/avatar/:id": routes.UserAvatarHandler,
 		"/banner/:id": routes.UserBannerHandler,
+		"/status":     routes.StatusHandler,
+		"/guilds":     routes.GuildsHandler,
+		"/guild/:id":  routes.GuildHandler,
+		"/channels":   routes.ChannelsHandler,
+		"/channel/:id": routes.ChannelHandler,
 	}
 	config := module.GetConfig(handlers)
 	server.Run(config, handlers)
