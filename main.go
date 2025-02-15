@@ -10,8 +10,10 @@ import (
 
 func main() {
 	handlers := map[string]fiber.Handler{
-		"/":         routes.IndexHandler,
-		"/user/:id": routes.UserHandler,
+		"/":           routes.IndexHandler,
+		"/user/:id":   routes.UserHandler,
+		"/avatar/:id": routes.UserAvatarHandler,
+		"/banner/:id": routes.UserBannerHandler,
 	}
 	config := module.GetConfig(handlers)
 	server.Run(config, handlers)

@@ -55,6 +55,12 @@ func GetVariables() types.Config {
 			{
 				Path: "/user/:id",
 			},
+			{
+				Path: "/avatar/:id",
+			},
+			{
+				Path: "/banner/:id",
+			},
 		},
 		Credentials: types.Credentials{
 			DiscordToken: discordToken,

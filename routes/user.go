@@ -89,6 +89,10 @@ func UserHandler(c *fiber.Ctx) error {
 		})
 	}
 
+	hostname := c.BaseURL()
+	userInfo["avatar"] = fmt.Sprintf("%s/avatar/%s", hostname, userID)
+	userInfo["banner"] = fmt.Sprintf("%s/banner/%s", hostname, userID)
+
 	activities, err := fetchUserActivity(userID, config.Credentials.DiscordToken)
 	if err != nil {
 		userInfo["activity_info"] = "Activity excluded because the user is not in the required Discord server"
