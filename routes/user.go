@@ -3,15 +3,41 @@ package routes
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
+	"distivity/client"
 	"distivity/config/static"
+	"distivity/types"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func fetchUserActivity(userID string) (map[string]interface{}, error) {
-	return nil, nil
+func fetchUserActivity(config types.Config, userID string) (map[string]interface{}, error) {
+	session := client.GetDiscordSession()
+	if session.State == nil {
+		log.Printf("Error: Discord session state cache not found")
+		return nil, fmt.Errorf("discord session state cache not found")
+	}
+
+	activity, err := session.State.Presence(config.Discord.GuildID, userID)
+	if err != nil {
+		log.Printf("Error fetching user activity: %v", err)
+		return nil, err
+	}
+
+	activityMap := make(map[string]interface{})
+	activityBytes, err := json.Marshal(activity)
+	if err != nil {
+		log.Printf("Error marshalling activity: %v", err)
+		return nil, err
+	}
+	if err := json.Unmarshal(activityBytes, &activityMap); err != nil {
+		log.Printf("Error unmarshalling activity: %v", err)
+		return nil, err
+	}
+
+	return activityMap, nil
 }
 
 func UserHandler(c *fiber.Ctx) error {
@@ -77,7 +103,7 @@ func UserHandler(c *fiber.Ctx) error {
 		userInfo["system"] = false
 	}
 
-	activities, err := fetchUserActivity(userID)
+	activities, err := fetchUserActivity(config, userID)
 	if err != nil {
 		userInfo["activity_info"] = "Activity excluded because the user is not in the required Discord server"
 	} else {

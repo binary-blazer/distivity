@@ -51,7 +51,8 @@ type Credentials struct {
 }
 
 type Discord struct {
-	API DiscordAPI `json:"api"`
+	API     DiscordAPI `json:"api"`
+	GuildID string     `json:"guild_id"`
 }
 
 type DiscordAPI struct {
