@@ -48,6 +48,11 @@ func GetVariables() types.Config {
 				},
 			},
 		},
+		Discord: types.Discord{
+			API: types.DiscordAPI{
+				BaseURL: "https://discord.com/api/v9",
+			},
+		},
 		Routes: []types.Route{
 			{
 				Path: "/",

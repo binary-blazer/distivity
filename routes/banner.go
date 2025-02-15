@@ -27,7 +27,7 @@ func UserBannerHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	url := fmt.Sprintf("https://discord.com/api/v9/users/%s", userID)
+	url := fmt.Sprintf("%s/users/%s", config.Discord.API.BaseURL, userID)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

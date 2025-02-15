@@ -8,38 +8,34 @@ import (
 
 	"distivity/config/static"
 
+	"github.com/bwmarrin/discordgo"
 	"github.com/gofiber/fiber/v2"
 )
 
-func fetchUserActivity(userID string, discordToken string) (map[string]interface{}, error) {
-	url := fmt.Sprintf("https://discord.com/api/v9/users/%s/activities", userID)
-	req, err := http.NewRequest("GET", url, nil)
+var discordSession *discordgo.Session
+
+func init() {
+	config := static.GetConfig()
+	var err error
+	discordSession, err = discordgo.New("Bot " + config.Credentials.DiscordToken)
 	if err != nil {
-		log.Printf("Error creating request: %v", err)
-		return nil, err
+		log.Fatalf("Error creating Discord session: %v", err)
 	}
-	req.Header.Set("Authorization", fmt.Sprintf("Bot %s", discordToken))
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	discordSession.AddHandler(activityHandler)
+
+	err = discordSession.Open()
 	if err != nil {
-		log.Printf("Error making request: %v", err)
-		return nil, err
+		log.Fatalf("Error opening Discord session: %v", err)
 	}
-	defer resp.Body.Close()
+}
 
-	if resp.StatusCode != http.StatusOK {
-		log.Printf("Error response status: %v", resp.StatusCode)
-		return nil, fmt.Errorf("failed to fetch user activity")
-	}
+func activityHandler(s *discordgo.Session, m *discordgo.PresenceUpdate) {
+	log.Printf("User %s is now %s", m.User.ID, m.Status)
+}
 
-	var activities map[string]interface{}
-	if err := json.NewDecoder(resp.Body).Decode(&activities); err != nil {
-		log.Printf("Error decoding response: %v", err)
-		return nil, err
-	}
-
-	return activities, nil
+func fetchUserActivity(userID string) (map[string]interface{}, error) {
+	return nil, nil
 }
 
 func UserHandler(c *fiber.Ctx) error {
@@ -58,7 +54,7 @@ func UserHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	url := fmt.Sprintf("https://discord.com/api/v9/users/%s", userID)
+	url := fmt.Sprintf("%s/users/%s", config.Discord.API.BaseURL, userID)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -93,7 +89,19 @@ func UserHandler(c *fiber.Ctx) error {
 	userInfo["avatar"] = fmt.Sprintf("%s/avatar/%s", hostname, userID)
 	userInfo["banner"] = fmt.Sprintf("%s/banner/%s", hostname, userID)
 
-	activities, err := fetchUserActivity(userID, config.Credentials.DiscordToken)
+	if bot, ok := userInfo["bot"].(bool); ok {
+		userInfo["bot"] = bot
+	} else {
+		userInfo["bot"] = false
+	}
+
+	if system, ok := userInfo["system"].(bool); ok {
+		userInfo["system"] = system
+	} else {
+		userInfo["system"] = false
+	}
+
+	activities, err := fetchUserActivity(userID)
 	if err != nil {
 		userInfo["activity_info"] = "Activity excluded because the user is not in the required Discord server"
 	} else {
@@ -104,9 +112,6 @@ func UserHandler(c *fiber.Ctx) error {
 		"data":    userInfo,
 		"success": true,
 	}
-
-	// Log the user data
-	log.Printf("User data: %v", response)
 
 	return c.JSON(response)
 }

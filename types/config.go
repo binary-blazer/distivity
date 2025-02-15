@@ -8,6 +8,7 @@ type Config struct {
 	Routes      []Route                  `json:"routes"`
 	Handlers    map[string]fiber.Handler `json:"handlers"`
 	Credentials Credentials              `json:"credentials"`
+	Discord     Discord                  `json:"discord"`
 }
 
 type WebserverPaths struct {
@@ -47,4 +48,12 @@ type Route struct {
 
 type Credentials struct {
 	DiscordToken string `json:"discord_token"`
+}
+
+type Discord struct {
+	API DiscordAPI `json:"api"`
+}
+
+type DiscordAPI struct {
+	BaseURL string `json:"base_url"`
 }
