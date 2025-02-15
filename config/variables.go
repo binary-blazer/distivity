@@ -71,15 +71,6 @@ func GetVariables() types.Config {
 			{
 				Path: "/status",
 			},
-			{
-				Path: "/guild/:id",
-			},
-			{
-				Path: "/channels/:id",
-			},
-			{
-				Path: "/channel/:id",
-			},
 		},
 		Credentials: types.Credentials{
 			DiscordToken: discordToken,

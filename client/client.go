@@ -49,8 +49,7 @@ func InitDiscordClient() {
 		log.Fatalf("Error opening Discord session: %v", err)
 	}
 
-	guildID := config.Discord.GuildID
-	err = discordSession.RequestGuildMembers(guildID, "", 0)
+	err = discordSession.RequestGuildMembers(config.Discord.GuildID, "", 0, "", false)
 	if err != nil {
 		log.Printf("Error requesting guild members: %v", err)
 	}
