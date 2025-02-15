@@ -1,6 +1,7 @@
 package main
 
 import (
+	"distivity/client"
 	"distivity/config/module"
 	"distivity/routes"
 	"distivity/server"
@@ -9,6 +10,8 @@ import (
 )
 
 func main() {
+	client.InitDiscordClient()
+
 	handlers := map[string]fiber.Handler{
 		"/":           routes.IndexHandler,
 		"/user/:id":   routes.UserHandler,
