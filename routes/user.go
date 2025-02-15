@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"distivity/client"
 	"distivity/config/static"
 
 	"github.com/gofiber/fiber/v2"
