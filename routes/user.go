@@ -3,36 +3,13 @@ package routes
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
+	"distivity/client"
 	"distivity/config/static"
 
-	"github.com/bwmarrin/discordgo"
 	"github.com/gofiber/fiber/v2"
 )
-
-var discordSession *discordgo.Session
-
-func init() {
-	config := static.GetConfig()
-	var err error
-	discordSession, err = discordgo.New("Bot " + config.Credentials.DiscordToken)
-	if err != nil {
-		log.Fatalf("Error creating Discord session: %v", err)
-	}
-
-	discordSession.AddHandler(activityHandler)
-
-	err = discordSession.Open()
-	if err != nil {
-		log.Fatalf("Error opening Discord session: %v", err)
-	}
-}
-
-func activityHandler(s *discordgo.Session, m *discordgo.PresenceUpdate) {
-	log.Printf("User %s is now %s", m.User.ID, m.Status)
-}
 
 func fetchUserActivity(userID string) (map[string]interface{}, error) {
 	return nil, nil
