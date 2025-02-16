@@ -41,7 +41,7 @@ func GetVariables() types.Config {
 		App: types.App{
 			Name:        "Distivity",
 			Description: "A modern RESTful API to get presence details of a discord account by ID",
-			Version:     "1.1.0",
+			Version:     "1.1.1",
 			Environment: "development",
 			Authors: []types.Author{
 				{
