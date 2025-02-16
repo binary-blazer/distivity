@@ -16,6 +16,8 @@ func init() {
 
 func GetVariables() types.Config {
 	discordToken := os.Getenv("DISCORD_BOT_TOKEN")
+	guildID := os.Getenv("DISCORD_GUILD_ID")
+	guildInvite := os.Getenv("DISCORD_GUILD_INVITE")
 
 	return types.Config{
 		Webserver: types.Webserver{
@@ -52,8 +54,8 @@ func GetVariables() types.Config {
 			API: types.DiscordAPI{
 				BaseURL: "https://discord.com/api/v9",
 			},
-			GuildID:      "1340357987700707398",
-			GuildInvite:  "https://discord.gg/g3s3By9dda",
+			GuildID:      guildID,
+			GuildInvite:  guildInvite,
 			CustomStatus: "monitoring {count} users :heart:",
 		},
 		Routes: []types.Route{
