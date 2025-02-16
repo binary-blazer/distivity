@@ -3,7 +3,6 @@ package websocket
 import (
 	"log"
 	"net/http"
-	"sync"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gorilla/websocket"

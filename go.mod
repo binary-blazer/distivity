@@ -21,6 +21,6 @@ require (
 
 require (
 	github.com/bwmarrin/discordgo v0.28.1 // direct
-	github.com/gorilla/websocket v1.4.2 // indirect
+	github.com/gorilla/websocket v1.5.3 // direct
 	golang.org/x/crypto v0.14.0 // indirect
 )
