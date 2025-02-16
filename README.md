@@ -37,10 +37,22 @@ Distivity is a modern RESTful API that allows you to get presence details of a D
 
 2. Update the configuration in `./config/variables.go`
 
-3. Create a `.env` file in the root directory and add your Discord bot token:
+3. Rename the `.env.example` file to `.env` and update the values:
 
    ```sh
-   DISCORD_BOT_TOKEN=your_bot_token_here
+   # On Unix
+   cp .env.example .env
+
+   # On Windows
+   ren .env.example .env
+   ```
+   
+   The `.env` file should look like this with your values:
+   ```env
+   PORT=8080 # Port
+   DISCORD_BOT_TOKEN="" # Bot token
+   DISCORD_GUILD_ID="" # Guild ID
+   DISCORD_GUILD_INVITE="" # Guild invite
    ```
 
 4. Install the dependencies:
