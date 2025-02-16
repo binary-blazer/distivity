@@ -2,8 +2,8 @@ FROM golang:1.23.3-alpine
 
 WORKDIR /app
 
-COPY distivity .
+COPY . .
 
-RUN go build -o distivity
+RUN go build -o distivity main.go
 
 ENTRYPOINT ["./distivity"]
