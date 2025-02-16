@@ -5,7 +5,6 @@ import (
 	"distivity/config/module"
 	"distivity/routes"
 	"distivity/server"
-	"distivity/websocket" // P07de
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -19,7 +18,6 @@ func main() {
 		"/avatar/:id": routes.UserAvatarHandler,
 		"/banner/:id": routes.UserBannerHandler,
 		"/status":     routes.StatusHandler,
-		"/ws":         websocket.WebsocketHandler, // P77d6
 	}
 	config := module.GetConfig(handlers)
 	server.Run(config, handlers)

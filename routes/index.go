@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"distivity/config/static"
-	"distivity/websocket"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -26,9 +25,4 @@ func IndexHandler(c *fiber.Ctx) error {
 	response["load"] = fmt.Sprintf("%dms", duration)
 
 	return c.JSON(response)
-}
-
-func WebsocketHandler(c *fiber.Ctx) error {
-	websocket.WebsocketHandler(c)
-	return nil
 }
