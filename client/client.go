@@ -50,6 +50,10 @@ func setActivity(s *discordgo.Session, activity string, config types.Config) {
 	}
 }
 
+func presenceUpdateHandler(s *discordgo.Session, p *discordgo.PresenceUpdate) {
+	// Presence update detected
+}
+
 func InitDiscordClient() {
 	config := static.GetConfig()
 	log.Println(colorize(colorCyan, "Setting up the Sessions..."))
@@ -63,6 +67,8 @@ func InitDiscordClient() {
 	discordSession.Identify.Intents = discordgo.MakeIntent(discordgo.IntentsGuildMembers)
 	discordSession.Identify.Intents |= discordgo.IntentsGuildPresences
 	discordSession.Identify.Intents |= discordgo.IntentsGuilds
+
+	discordSession.AddHandler(presenceUpdateHandler)
 
 	err = discordSession.Open()
 	if err != nil {

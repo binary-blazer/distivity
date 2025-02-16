@@ -53,6 +53,7 @@ func GetVariables() types.Config {
 				BaseURL: "https://discord.com/api/v9",
 			},
 			GuildID:      "1340357987700707398",
+			GuildInvite:  "https://discord.gg/g3s3By9dda",
 			CustomStatus: "monitoring {count} users :heart:",
 		},
 		Routes: []types.Route{

@@ -105,7 +105,7 @@ func UserHandler(c *fiber.Ctx) error {
 
 	activities, err := fetchUserActivity(config, userID)
 	if err != nil {
-		userInfo["activity_info"] = "Activity excluded because the user is not in the required Discord server"
+		userInfo["activity_info"] = fmt.Sprintf("Activity excluded because the user is not in the required Discord server: %s", config.Discord.GuildInvite)
 	} else {
 		userInfo["activities"] = activities["activities"]
 	}
