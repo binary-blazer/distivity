@@ -4,6 +4,7 @@ import (
 	"distivity/types"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 )
@@ -17,11 +18,16 @@ func init() {
 func GetVariables() types.Config {
 	discordToken := os.Getenv("DISCORD_BOT_TOKEN")
 	guildID := os.Getenv("DISCORD_GUILD_ID")
-	guildInvite := os.Getenv("DISCORD_GUILD_INVITE")
+	portStr := os.Getenv("PORT")
+	port, err := strconv.Atoi(portStr)
+	if err != nil {
+		fmt.Println("Invalid port value, using default port 8080")
+		port = 8080
+	}
 
 	return types.Config{
 		Webserver: types.Webserver{
-			Port: 3000,
+			Port: port,
 			Paths: types.WebserverPaths{
 				Root:   "/",
 				Static: "./public",
@@ -55,7 +61,7 @@ func GetVariables() types.Config {
 				BaseURL: "https://discord.com/api/v9",
 			},
 			GuildID:      guildID,
-			GuildInvite:  guildInvite,
+			GuildInvite:  "", // Define or remove this variable
 			CustomStatus: "monitoring {count} users :heart:",
 		},
 		Routes: []types.Route{

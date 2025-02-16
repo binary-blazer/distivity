@@ -6,4 +6,6 @@ COPY . .
 
 RUN go build -o distivity main.go
 
+EXPOSE 8080
+
 ENTRYPOINT ["./distivity"]
